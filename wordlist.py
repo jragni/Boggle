@@ -27,9 +27,41 @@ class WordList:
         return words
 
     def check_word(self, word):
-        """Is word in word list?"""
+        """Is word in word list?
+
+            check if word is in dictionary/ WordList.word   
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("CAT")
+            True
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("ggfiibukajhfed")
+            False
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("ggfjhfed")
+            False
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("COFFEE") 
+            True
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("DOG") 
+            True
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("1234") 
+            False
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word("") 
+            False
+            >>> cw = WordList("dictionary.txt")
+            >>> cw.check_word([]) 
+            Traceback (most recent call last):
+            ...
+            TypeError: unhashable type: 'list'
+        """
+
+
 
         return word in self.words
 
 
 english_words = WordList("dictionary.txt")
+print(english_words)
