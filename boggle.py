@@ -9,6 +9,7 @@ LETTERS_BY_FREQ = (
         "BBCCDDFFGGHHKKMMPPYY" +  # less common
         "JVWXZ")  # rare (we never include Q)
 
+# Key:length, Val: points
 BOGGLE_WORD_LENGTH_SCORES = {
     3: 1,
     4: 1,
