@@ -35,5 +35,21 @@ class BoggleAppTestCase(TestCase):
         """Test starting a new game."""
 
         with self.client as client:
-            ...
-            # write a test for this route
+
+            response = client.get('/api/new-game')
+
+            #maybe to delete of them
+            #implicitly testing if return is json
+
+            #testing if we are getting a response
+            assert any(response.get_json()) is not False
+
+            #testing the response if it is a dictionary
+            assert type(response.get_json()) is dict
+            
+            #testing if we are getting a list 
+            assert type(response.get_json()["board"]) is list
+
+            #testing if game id has been serialized
+            assert type(response.get_json()["gameId"]) is str 
+   
