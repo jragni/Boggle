@@ -160,9 +160,10 @@ class BoggleGame():
         # until all tries are exhausted or until success.
 
         # if we're searching off the board, current recursion fails
+
         if x < 0 or x >= self.board_size or y < 0 or y >= self.board_size:
             return False
-
+    
         # Base case: this isn't the letter we're looking for.
         if self.board[y][x] != word[0]:
             return False
