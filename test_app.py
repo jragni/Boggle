@@ -53,3 +53,9 @@ class BoggleAppTestCase(TestCase):
             #testing if game id has been serialized
             assert type(response.get_json()["gameId"]) is str 
    
+    def test_score_word(self):
+        """Test word score"""
+
+        with self.client as client:
+            
+            response = client.get('/api/score-word')

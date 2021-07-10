@@ -41,18 +41,20 @@ def score_word():
 
     game_id = session["game_id"]
     new_word = request.form['word'].strip().upper()
-    
+    game = games[game_id]
     response = None
     
 
     if new_word not in english_words.words:
         return {"result": "not-word"}
 
-    elif games[game_id].check_word_on_board(new_word):
+    elif game.check_word_on_board(new_word):
         response = {"result": "not-on-board"}
 
-    elif games[game_id].is_word_in_word_list(new_word):
+    elif game.is_word_in_word_list(new_word):
+        # Word is in word list, score word
         response = {"result": "ok"}
+        game.play_and_score_word(new_word)
     
     return  jsonify(response)
 
