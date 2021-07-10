@@ -19,6 +19,12 @@ async function start() {
   displayBoard(board);
 }
 
+async function submit () {
+    let data = {game_id: gameId , word: $wordInput.val()}
+
+    let response = axios.post("/api/score-word", data )
+
+} 
 /** Display board */
 
 function displayBoard(board) {

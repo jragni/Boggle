@@ -2,15 +2,19 @@ from flask import Flask, request, render_template, jsonify, session
 from uuid import uuid4
 from flask_debugtoolbar import DebugToolbarExtension
 from boggle import BoggleGame
+from wordlist import english_words
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "this-is-secret"
 debug = DebugToolbarExtension(app)
 # The boggle games created, keyed by game id
-games = {
-    1 : BoggleGame() # NOTE: used for testing
-}
+# games = {
+#     1 : BoggleGame() # NOTE: used for testing
+# }
 
+
+games = {}
 @app.route("/")
 def homepage():
     """Show board."""
@@ -24,6 +28,7 @@ def new_game():
     # get a unique id for the board we're creating
     game_id = str(uuid4())
     game = BoggleGame()
+    session["game_id"] = game_id
     games[game_id] = game
     return jsonify( {"gameId":game_id, "board":game.board} )
 
@@ -34,22 +39,30 @@ def score_word():
     #It should be in the word list
     #It sound be findable on the board
 
-    new_word = request.form('word')
-
-    curr_game_id = 1  # NOTE: used for testing 
-
-    current_game = games[curr_game_id]   # NOTE: used for testing 
+    game_id = session["game_id"]
+    new_word = request.form['word'].strip().upper()
     
-    if current_game.is_word_in_word_list(new_word):
-        pass
-    elif current_game.is_word_not_a_dup(new_word):
-        pass
-    elif current_game.check_word_on_board(new_word):
-        current_game.play_and_score_word(new_word)
+    response = None
     
-    #update game in games
 
-    games[curr_game_id] = current_game
+    if new_word not in english_words.words:
+        return {"result": "not-word"}
+
+    elif games[game_id].check_word_on_board(new_word):
+        response = {"result": "not-on-board"}
+
+    elif games[game_id].is_word_in_word_list(new_word):
+        response = {"result": "ok"}
+    
+    return  jsonify(response)
+
+
+
+    
+    
+
+
+    
 
     
 
