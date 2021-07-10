@@ -1,6 +1,47 @@
 from unittest import TestCase
 
-from app import app, games
+from app import app #,games
+
+games = {
+  "board": [
+    [
+      "E", 
+      "L", 
+      "E", 
+      "T", 
+      "H"
+    ], 
+    [
+      "J", 
+      "V", 
+      "N", 
+      "T", 
+      "A"
+    ], 
+    [
+      "J", 
+      "T", 
+      "U", 
+      "H", 
+      "N"
+    ], 
+    [
+      "M", 
+      "R", 
+      "U", 
+      "R", 
+      "U"
+    ], 
+    [
+      "U", 
+      "T", 
+      "N", 
+      "D", 
+      "R"
+    ]
+  ], 
+  "gameId": "a4706fb2-22a2-44cb-acc4-5187cf711caa"
+}
 
 # Make Flask errors be real errors, not HTML pages with error info
 app.config['TESTING'] = True
@@ -35,7 +76,6 @@ class BoggleAppTestCase(TestCase):
         """Test starting a new game."""
 
         with self.client as client:
-
             response = client.get('/api/new-game')
 
             #maybe to delete of them
@@ -58,4 +98,24 @@ class BoggleAppTestCase(TestCase):
 
         with self.client as client:
             
-            response = client.get('/api/score-word')
+         
+            response = client.post('/api/score-word')
+            gameId = response.get_json()['game_id']
+            game = games[gameId] 
+            game.board = [[ "E", "L",  "E", "T",   "H" ], 
+                            ["J", "V", "N", "T",   "A" ], 
+                            [ "J", "T","U", "H",   "N"], 
+                            [ "M", "R", "U", "R",  "U"], 
+                            [ "U", "T", "N", "D",  "R"]]
+        
+            response = client.post('/api/score-word', json = {"word":"run" , "game_id": gameId })
+            assert response.get_json() == {"result": "ok"}
+
+
+
+
+
+
+
+
+            

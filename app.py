@@ -54,7 +54,7 @@ def score_word():
     elif game.is_word_in_word_list(new_word):
         # Word is in word list, score word
         response = {"result": "ok"}
-        game.play_and_score_word(new_word)
+    # game.play_and_score_word(new_word)
     
     return  jsonify(response)
 
